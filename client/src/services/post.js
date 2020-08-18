@@ -25,7 +25,14 @@ const api = axios.create({
 
 export const listPosts = () => api.get('/post/list').then(response => response.data);
 
-export const createPost = body => api.post('/post', body).then(response => response.data);
+// export const createPost = body => api.post('/post', body).then(response => response.data);
+export const createPost = body => {
+  const formBody = new window.FormData();
+  formBody.append('content', body.content);
+  formBody.append('photo', body.photo);
+  // for (let property in body) formBody.append(property, body[property]);
+  api.post('/post', formBody).then(response => response.data);
+};
 
 export const loadPost = id => api.get(`/post/${id}`).then(response => response.data);
 

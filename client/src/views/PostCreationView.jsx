@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
+import PostForm from './../components/PostForm';
+
 import { createPost } from './../services/post';
 
 class PostCreationView extends Component {
   constructor() {
     super();
     this.state = {
-      content: ''
+      content: '',
+      photo: null
     };
   }
 
-  handlePostCreation = event => {
-    event.preventDefault();
-
+  handlePostCreation = () => {
     const content = this.state.content;
-    const name = this.state.name;
+    const photo = this.state.photo;
 
-    const body = { content, name };
+    const body = { content, photo };
 
     createPost(body)
       .then(data => {
@@ -29,17 +30,28 @@ class PostCreationView extends Component {
       });
   };
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
+  handleContentChange = content => {
     this.setState({
-      [name]: value
+      content
+    });
+  };
+
+  handlePhotoChange = photo => {
+    this.setState({
+      photo
     });
   };
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handlePostCreation}>
+        <PostForm
+          content={this.state.content}
+          onContentChange={this.handleContentChange}
+          onPhotoChange={this.handlePhotoChange}
+          onFormSubmission={this.handlePostCreation}
+        />
+        {/* <form onSubmit={this.handlePostCreation}>
           <label htmlFor="content-input">Post Content</label>
           <textarea
             id="content-input"
@@ -49,7 +61,7 @@ class PostCreationView extends Component {
             onChange={this.handleInputChange}
           />
           <button>Create Post</button>
-        </form>
+        </form> */}
       </div>
     );
   }
