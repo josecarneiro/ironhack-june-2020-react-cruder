@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { listPosts } from './../services/post';
-import { Link } from 'react-router-dom';
 import PostItem from '../components/Post';
 
 class HomeView extends Component {
