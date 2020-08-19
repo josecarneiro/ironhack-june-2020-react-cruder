@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { listPosts } from './../services/post';
 import { Link } from 'react-router-dom';
+import PostItem from '../components/Post';
 
 class HomeView extends Component {
   constructor() {
@@ -27,13 +28,9 @@ class HomeView extends Component {
 
   render() {
     return (
-      <div class="post-list">
+      <div className="post-list">
         {this.state.posts.map(post => (
-          <Link to={`/post/${post._id}`} key={post._id} className="post-item">
-            <strong>{post.content}</strong>
-            <br />
-            <small>{post.creationDate}</small>
-          </Link>
+          <PostItem {...post} key={post._id} />
         ))}
       </div>
     );

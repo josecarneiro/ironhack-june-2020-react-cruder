@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PostForm from './../components/PostForm';
+import PostForm from './../../components/PostForm';
 
-import { createPost } from './../services/post';
+import { createPost } from './../../services/post';
 
 class PostCreationView extends Component {
   constructor() {

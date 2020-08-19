@@ -7,7 +7,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3020'
+  baseURL: 'http://localhost:3020',
+  withCredentials: true
 });
 
 // const listPosts = () =>
@@ -31,7 +32,7 @@ export const createPost = body => {
   formBody.append('content', body.content);
   formBody.append('photo', body.photo);
   // for (let property in body) formBody.append(property, body[property]);
-  api.post('/post', formBody).then(response => response.data);
+  return api.post('/post', formBody).then(response => response.data);
 };
 
 export const loadPost = id => api.get(`/post/${id}`).then(response => response.data);

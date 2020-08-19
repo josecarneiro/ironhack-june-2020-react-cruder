@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PostForm from './../components/PostForm';
+import PostForm from './../../components/PostForm';
 
-import { loadPost, editPost, deletePost } from './../services/post';
+import { loadPost, editPost, deletePost } from './../../services/post';
 
 class PostEditView extends Component {
   constructor() {
@@ -31,6 +31,7 @@ class PostEditView extends Component {
     const id = this.props.match.params.id;
 
     const content = this.state.content;
+    const photo = this.state.photo;
     const body = { content, photo };
 
     editPost(id, body)
@@ -42,7 +43,8 @@ class PostEditView extends Component {
       });
   };
 
-  handlePostDeletion = () => {
+  handlePostDeletion = event => {
+    event.preventDefault();
     const id = this.props.match.params.id;
 
     deletePost(id)

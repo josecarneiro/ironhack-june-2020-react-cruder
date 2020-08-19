@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { loadPost } from './../services/post';
+import { loadPost } from './../../services/post';
 
 class SinglePostView extends Component {
   constructor() {
@@ -32,6 +32,7 @@ class SinglePostView extends Component {
       <div>
         {(this.state.loaded && (
           <>
+            {post.photo && <img src={post.photo} alt={post.content} />}
             <p>{post.content}</p>
             <small>{post.creationDate}</small>
             <Link to={`/post/${this.props.match.params.id}/edit`}>Edit Post</Link>

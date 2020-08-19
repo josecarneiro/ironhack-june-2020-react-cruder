@@ -2,6 +2,8 @@ const express = require('express');
 
 const Post = require('./../models/post');
 
+const routeAuthenticationGuard = require('./../middleware/route-authentication-guard');
+
 const multer = require('multer');
 const cloudinary = require('cloudinary');
 const multerStorageCloudinary = require('multer-storage-cloudinary');
@@ -39,30 +41,34 @@ postRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-postRouter.post('/', upload.single('photo'), (request, response, next) => {
-  console.log(request.body, request.file);
+postRouter.post(
+  '/',
+  routeAuthenticationGuard,
+  upload.single('photo'),
+  (request, response, next) => {
+    let url;
+    if (request.file) {
+      url = request.file.path;
+    }
 
-  let url;
-  if (request.file) {
-    url = request.file.path;
-  }
-
-  Post.create({
-    content: request.body.content,
-    photo: url
-  })
-    .then(post => {
-      response.json({ post });
+    Post.create({
+      creator: request.user._id,
+      content: request.body.content,
+      photo: url
     })
-    .catch(error => {
-      next(error);
-    });
-});
+      .then(post => {
+        response.json({ post });
+      })
+      .catch(error => {
+        next(error);
+      });
+  }
+);
 
-postRouter.delete('/:id', async (request, response, next) => {
+postRouter.delete('/:id', routeAuthenticationGuard, async (request, response, next) => {
   const id = request.params.id;
 
-  Post.findByIdAndDelete(id)
+  Post.findOneAndDelete({ _id: id, creator: request.user._id })
     .then(() => {
       response.json({});
     })
@@ -71,10 +77,14 @@ postRouter.delete('/:id', async (request, response, next) => {
     });
 });
 
-postRouter.patch('/:id', (request, response, next) => {
+postRouter.patch('/:id', routeAuthenticationGuard, (request, response, next) => {
   const id = request.params.id;
 
-  Post.findByIdAndUpdate(id, { content: request.body.content }, { new: true })
+  Post.findOneAndUpdate(
+    { _id: id, creator: request.user._id },
+    { content: request.body.content },
+    { new: true }
+  )
     .then(post => {
       response.json({ post });
     })

@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: sans-serif;
   margin: 0 auto;
@@ -9,20 +13,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+img {
+  max-width: 100%;
+}
+
 a {
   display: flex;
   color: inherit;
   text-decoration: none;
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-}
-
 form {
   display: flex;
   flex-direction: column;
+  input,
+  textarea {
+    margin-bottom: 1em;
+  }
 }
 
 input,
@@ -31,9 +38,7 @@ button {
   border: 1px solid lightgray;
   font: inherit;
   color: inherit;
-}
-
-.post-item {
-  display: flex;
-  flex-direction: column;
+  line-height: inherit;
+  background-color: transparent;
+  padding: 1em;
 }
