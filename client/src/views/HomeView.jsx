@@ -3,8 +3,8 @@ import { listPosts } from './../services/post';
 import PostItem from '../components/Post';
 
 class HomeView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       loaded: false,
       posts: []

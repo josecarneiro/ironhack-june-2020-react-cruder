@@ -62,8 +62,8 @@ app.use('*', (request, response, next) => {
 // If next(error) was called previously,
 // this will run
 app.use((error, request, response, next) => {
-  console.log(error);
-  response.json({ error });
+  response.status(400);
+  response.json({ error: { message: error.message } });
 });
 
 module.exports = app;

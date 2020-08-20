@@ -6,7 +6,8 @@ class AuthenticationSignInView extends Component {
     super();
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      error: null
     };
   }
 
@@ -27,7 +28,10 @@ class AuthenticationSignInView extends Component {
         this.props.onUserUpdate(user);
       })
       .catch(error => {
-        console.log(error);
+        const serverError = error.response.data.error;
+        this.setState({
+          error: serverError
+        });
       });
   };
 
@@ -57,6 +61,13 @@ class AuthenticationSignInView extends Component {
             required
             minLength="8"
           />
+
+          {this.state.error && (
+            <div className="error-block">
+              <p>There was an error submiting the form:</p>
+              <p>{this.state.error.message}</p>
+            </div>
+          )}
 
           <button>Sign In</button>
         </form>
