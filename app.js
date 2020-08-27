@@ -38,7 +38,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      sameSite: 'none'
+      sameSite: 'none',
+      secure: true
     },
     store: new mongoStore({
       mongooseConnection: mongoose.connection,
